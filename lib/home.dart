@@ -1,6 +1,7 @@
 import 'package:bottom_navy_bar/bottom_navy_bar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/function/ui/adddrug.dart';
 import 'package:flutter_application_1/test/screens/dashboard_screen.dart';
 import 'page/historydrug.dart';
 import 'page/homepage.dart';
@@ -44,7 +45,8 @@ class _HomeState extends State<Home> {
           setState(() => currentindex = index);
         },
         children: [
-          Homepage(),
+          //Homepage(),
+          Adddrug(),
           Historydrug(),
           DashboardScreen(),
           //Record(),

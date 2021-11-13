@@ -1,5 +1,6 @@
 import 'package:date_picker_timeline/date_picker_timeline.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/Navigation/naviga_drawertest.dart';
 import 'package:flutter_application_1/controller/task_controller.dart';
 import 'package:flutter_application_1/function/ui/add_task_bar.dart';
 import 'package:flutter_application_1/function/button.dart';
@@ -41,6 +42,7 @@ class _AdddrugState extends State<Adddrug> {
   Widget build(BuildContext context) {
     print('buil method called');
     return Scaffold(
+      drawer: DrawerTest(),
       appBar: _appBar(
           /*backgroundColor: Color(0xFF3a73b5),
           title: Text('เพิ่มยา'),*/
@@ -358,15 +360,15 @@ class _AdddrugState extends State<Adddrug> {
   _appBar() {
     return AppBar(
       //backgroundColor: context.theme.backgroundColor,
-      leading: GestureDetector(
-        onTap:(){
-          Get.back();
-        },
-        child: 
-              Icon(Get.isDarkMode ? Icons.arrow_back_ios : Icons.arrow_back_ios,
-              size: 20, color: Get.isDarkMode ? Colors.white : Colors.black),
+      // leading: GestureDetector(
+      //   onTap:(){
+      //     Get.back();
+      //   },
+      //   child: 
+      //         Icon(Get.isDarkMode ? Icons.arrow_back_ios : Icons.arrow_back_ios,
+      //         size: 20, color: Get.isDarkMode ? Colors.white : Colors.black),
             
-      ),
+      // ),
 
       actions: [
         GestureDetector(

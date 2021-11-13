@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/Navigation/naviga_drawer.dart';
+import 'package:flutter_application_1/Navigation/naviga_drawertest.dart';
 import 'package:flutter_application_1/test/res/custom_colors.dart';
 import 'package:flutter_application_1/test/utils/validator.dart';
 import 'package:intl/intl.dart';
@@ -64,7 +65,7 @@ class _RecordState extends State<Record> {
     print('บันทึกค่าความดัน');
     return Scaffold(
       
-      // drawer: DrawerTest(),
+      drawer: DrawerTest(),
       appBar: AppBar(
         backgroundColor: Color(0xFF3a73b5),
         title: Text('บันทึกค่าความดันโลหิตของคุณ'),
