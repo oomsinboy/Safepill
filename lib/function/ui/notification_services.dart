@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/controller/notifi_page.dart';
 import 'package:flutter_application_1/controller/task.dart';
@@ -15,10 +17,11 @@ class NotifyHelper {
     _configureLocalTimezone();
     final IOSInitializationSettings initializationSettingsIOS =
         IOSInitializationSettings(
-            requestSoundPermission: false,
-            requestBadgePermission: false,
-            requestAlertPermission: false,
-            onDidReceiveLocalNotification: onDidReceiveLocalNotification);
+      requestSoundPermission: false,
+      requestBadgePermission: false,
+      requestAlertPermission: false,
+      onDidReceiveLocalNotification: onDidReceiveLocalNotification,
+    );
 
     final AndroidInitializationSettings initializationSettingsAndroid =
         AndroidInitializationSettings("@drawable/ic_launcher");
@@ -28,30 +31,48 @@ class NotifyHelper {
       iOS: initializationSettingsIOS,
       android: initializationSettingsAndroid,
     );
-    await flutterLocalNotificationsPlugin.initialize(initializationSettings,
-        onSelectNotification: selectNotification);
+    await flutterLocalNotificationsPlugin.initialize(
+      initializationSettings,
+      onSelectNotification: selectNotification,
+    );
   }
 
-  Future<void> displayNotification(
-      {required String title, required String body}) async {
-    print("doing test");
-    var androidPlatformChannelSpecifics = new AndroidNotificationDetails(
-        'your channel id', 'your channel name', //'your channel description',
+  Future<void> displayNotification({
+    required String title,
+    required String body,
+  }) async {
+    const String id = "com.example.flutter_application_1";
+    const String name = "Foreground Notifications";
+    const String description =
+        "This channel is used for foreground notifications.";
 
-        importance: Importance.max,
-        priority: Priority.high);
+    const AndroidNotificationChannel _channel = AndroidNotificationChannel(
+      id,
+      name,
+      description: description,
+      importance: Importance.max,
+    );
 
-    var iOSPlatformChannelSpecifics = new IOSNotificationDetails();
-
-    var platformChannelSpecifics = new NotificationDetails(
-        android: androidPlatformChannelSpecifics,
-        iOS: iOSPlatformChannelSpecifics);
+    requestPermissions(_channel);
 
     await flutterLocalNotificationsPlugin.show(
       0,
       title,
       body,
-      platformChannelSpecifics,
+      NotificationDetails(
+        android: AndroidNotificationDetails(
+          _channel.id,
+          _channel.name,
+          channelDescription: _channel.description,
+          color: const Color(0xFFB00051),
+          ledColor: const Color(0xFFB00051),
+          ledOnMs: 1000,
+          ledOffMs: 500,
+          importance: _channel.importance,
+          priority: Priority.high,
+        ),
+        iOS: const IOSNotificationDetails(),
+      ),
       payload: 'TEST',
     );
   }
@@ -59,7 +80,7 @@ class NotifyHelper {
   tz.TZDateTime _nextInstanceOfTenAM(int hour, int minutes) {
     final tz.TZDateTime now = tz.TZDateTime.now(tz.local);
     tz.TZDateTime scheduleDate =
-    tz.TZDateTime(tz.local, now.year, now.month, now.day, hour, minutes);
+        tz.TZDateTime(tz.local, now.year, now.month, now.day, hour, minutes);
     if (scheduleDate.isBefore(now)) {
       scheduleDate = scheduleDate.add(const Duration(days: 1));
     }
@@ -68,58 +89,30 @@ class NotifyHelper {
 
   scheduledNotification(int hour, int minutes, Task task) async {
     await flutterLocalNotificationsPlugin.zonedSchedule(
-        task.id!,
-        task.title,
-        task.note,
-        /*'scheduled title',
+      task.id!,
+      task.title,
+      task.note,
+      /*'scheduled title',
          'theme changes 5 seconds ago',*/
-        _nextInstanceOfTenAM(hour, minutes),
-        //tz.TZDateTime.now(tz.local).add(const Duration(seconds: 5)),
-        const NotificationDetails(
-            android: AndroidNotificationDetails(
-          'your channel id',
-          'your channel name',
-          importance: Importance.max,
-          priority: Priority.max,
-        )),
-        androidAllowWhileIdle: true,
-        uiLocalNotificationDateInterpretation:
-            UILocalNotificationDateInterpretation.absoluteTime,
-        matchDateTimeComponents: DateTimeComponents.time,
-        payload: '{$task.title}|' + '{$task.note}|');
-  }
-
-  /*  Future<void> scheduledNotification(int id, String title, String body,int seconds) async {
-    await flutterLocalNotificationsPlugin.zonedSchedule(
-      id,
-      title,
-      body,
-      //_convertTime(hour , minutes),  
-      tz.TZDateTime.now(tz.local).add(Duration(seconds: seconds)),
+      _nextInstanceOfTenAM(hour, minutes),
+      //tz.TZDateTime.now(tz.local).add(const Duration(seconds: 5)),
       const NotificationDetails(
         android: AndroidNotificationDetails(
-          'main_channel',
-          'Main Channel',          
+          "com.example.flutter_application_1",
+          "Foreground Notifications",
+          channelDescription:
+              "This channel is used for foreground notifications.",
           importance: Importance.max,
           priority: Priority.max,
-          //icon: '@drawable/ic_flutternotification'
-        ),
-        iOS: IOSNotificationDetails(
-          //sound: 'default.wav',
-          presentAlert: true,
-          presentBadge: true,
-          presentSound: true,
         ),
       ),
       androidAllowWhileIdle: true,
-      uiLocalNotificationDateInterpretation: 
-      UILocalNotificationDateInterpretation.absoluteTime,
+      uiLocalNotificationDateInterpretation:
+          UILocalNotificationDateInterpretation.absoluteTime,
       matchDateTimeComponents: DateTimeComponents.time,
-      payload:/*'{$task.title}|'+'{$task.note}|'*/ 'Page'
-      );
-      //payload:'{$task.title}|'+'{$task.note}|'
-
-  }*/
+      payload: '{$task.title}|' + '{$task.note}|',
+    );
+  }
 
   Future<void> _configureLocalTimezone() async {
     tz.initializeTimeZones();
@@ -127,15 +120,22 @@ class NotifyHelper {
     tz.setLocalLocation(tz.getLocation(timeZone));
   }
 
-  void requestIOSPermissions() {
-    flutterLocalNotificationsPlugin
-        .resolvePlatformSpecificImplementation<
-            IOSFlutterLocalNotificationsPlugin>()
-        ?.requestPermissions(
-          alert: true,
-          badge: true,
-          sound: true,
-        );
+  void requestPermissions(AndroidNotificationChannel _channel) async {
+    if (Platform.isAndroid) {
+      await flutterLocalNotificationsPlugin
+          .resolvePlatformSpecificImplementation<
+              AndroidFlutterLocalNotificationsPlugin>()
+          ?.createNotificationChannel(_channel);
+    } else if (Platform.isIOS) {
+      await flutterLocalNotificationsPlugin
+          .resolvePlatformSpecificImplementation<
+              IOSFlutterLocalNotificationsPlugin>()
+          ?.requestPermissions(
+            alert: true,
+            badge: true,
+            sound: true,
+          );
+    }
   }
 
   Future selectNotification(String? payload) async {
