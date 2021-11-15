@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 // ignore: unused_import
 import 'package:flutter_application_1/login/loginMail/loginmail_screen.dart';
-import 'package:flutter_application_1/page/screen_main/pageuser.dart';
 
 class DrawerTest extends StatefulWidget {
   const DrawerTest({Key? key}) : super(key: key);
@@ -24,15 +23,24 @@ class _DrawerTestState extends State<DrawerTest> {
   // ignore: unused_field
   var _enteredMessage = '';
   final _controller = new TextEditingController();
-  String? uid;
-  String? name;
-  String? numberHN;
+  late String uid;
+  // ignore: non_constant_identifier_names
+  late String Name;
+  late String numberHN;
   @override
   void initState() {
     // ignore: todo
     // TODO: implement initState
     super.initState();
     findUid();
+  }
+
+  void signOut(BuildContext context) {
+    auth.signOut();
+    Navigator.pushAndRemoveUntil(
+        context,
+        MaterialPageRoute(builder: (context) => LoginScreen()),
+        ModalRoute.withName('/'));
   }
 
 //หาค่า Uid ของ User ที่ login อยู่
@@ -42,8 +50,8 @@ class _DrawerTestState extends State<DrawerTest> {
       await FirebaseAuth.instance.authStateChanges().listen((event) {
         setState(() {
           uid = event!.uid;
-          name = event.displayName;
-          numberHN = event.displayName;
+          Name = event.displayName!;
+          numberHN = event.phoneNumber!;
         });
       });
     });
@@ -79,18 +87,19 @@ class _DrawerTestState extends State<DrawerTest> {
                       fontSize: 20.0,
                       fontWeight: FontWeight.w900),
                 )),
-            accountName: Text(
+            accountName: 
+            Text(
               // ignore: unnecessary_brace_in_string_interps
-              'ชื่อ : ${name}',
+              'ชื่อ : ${Name}',
               style: TextStyle(
                   color: Colors.black,
-                  fontSize: 20.0,
+                  fontSize: 22.0,
                   fontWeight: FontWeight.w700),
             ),
             accountEmail: Text(
               // ignore: unnecessary_brace_in_string_interps
               'หมายเลข HN : ${numberHN}',
-              style: TextStyle(color: Colors.black, fontSize: 12.0),
+              style: TextStyle(color: Colors.black, fontSize: 10.0),
             ),
           ),
           ListTile(
@@ -99,11 +108,7 @@ class _DrawerTestState extends State<DrawerTest> {
                 const Text('ข้อมูลผู้ใช้งาน', style: TextStyle(fontSize: 20.0)),
             subtitle: Text('ข้อมูลของผู้ใช้'),
             trailing: Icon(Icons.keyboard_arrow_right),
-            onTap: () {
-              Navigator.of(context).push(
-            MaterialPageRoute(
-              builder: (context) => PageDataUser()));
-            },
+            onTap: () => Navigator.pushNamed(context, '/page datauser'),
           ),
           ListTile(
             leading: Icon(Icons.list_alt),
@@ -111,29 +116,30 @@ class _DrawerTestState extends State<DrawerTest> {
                 const Text('ข้อมูลยาในระบบ', style: TextStyle(fontSize: 20.0)),
             subtitle: Text('ข้อมูลยาโรคความดันโลหิตสูง'),
             trailing: Icon(Icons.keyboard_arrow_right),
-            onTap: () {
-              // Update the state of the app.
-              // ...
-            },
+            onTap: () => Navigator.pushNamed(context, '/medpill'),
           ),
-          ListTile(
-            leading: Icon(Icons.settings),
-            title: const Text('ตั้งค่า', style: TextStyle(fontSize: 20.0)),
-            subtitle: Text('ตั้งค่าการใช้งาน'),
-            trailing: Icon(Icons.keyboard_arrow_right),
-            onTap: () => Navigator.pushNamed(context, '/pagemore'),
-          ),
+          // ListTile(
+          //   leading: Icon(Icons.settings),
+          //   title: const Text('ตั้งค่า', style: TextStyle(fontSize: 20.0)),
+          //   subtitle: Text('ตั้งค่าการใช้งาน'),
+          //   trailing: Icon(Icons.keyboard_arrow_right),
+          //   onTap: () => Navigator.pop(context),
+          // ),
           Divider(),
           ListTile(
             title: const Text('ออกจากระบบ', style: TextStyle(fontSize: 20.0)),
             trailing: Icon(Icons.exit_to_app),
-            onTap: () async {
-              await Firebase.initializeApp().then((value) async {
-                await FirebaseAuth.instance.signOut().then((value) =>
-                    Navigator.pushNamedAndRemoveUntil(
-                        context, '/authen', (route) => false));
-              });
+            onLongPress: () {
+              signOut(context);
             },
+
+            // onTap: () async {
+            //   await Firebase.initializeApp().then((value) async {
+            //     await FirebaseAuth.instance.signOut().then((value) =>
+            //         Navigator.pushNamedAndRemoveUntil(
+            //             context, '/authen', (route) => false));
+            //   });
+            // },
           ),
         ],
       ),

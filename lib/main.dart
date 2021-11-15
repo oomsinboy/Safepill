@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/Navigation/naviga_medpill.dart';
 import 'package:flutter_application_1/Welcome/welcome.dart';
 import 'package:flutter_application_1/controller/db_helper.dart';
 import 'package:flutter_application_1/function/ui/theme.dart';
@@ -12,6 +13,7 @@ import 'package:flutter_application_1/page/graph/graphpage.dart';
 import 'package:flutter_application_1/page/guidepill.dart';
 import 'package:flutter_application_1/page/detailpressure.dart';
 import 'package:flutter_application_1/page/more.dart';
+import 'package:flutter_application_1/page/screen_main/pageuser.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 
@@ -61,6 +63,8 @@ class MyApp extends StatelessWidget {
         '/addtemp': (context) => AddTemp(),
         '/graphpage': (context) => PageGraphtest(),
         '/pagemore': (context) => More(),
+        '/page datauser': (context) => PageDataUser(),
+        //'/medpill': (context) => Medpill(),
       },
       debugShowCheckedModeBanner: false,
     );

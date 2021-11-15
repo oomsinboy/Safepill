@@ -32,7 +32,7 @@ class _AdddrugState extends State<Adddrug> {
     super.initState();
     notifyHelper = NotifyHelper();
     notifyHelper.initializeNotification();
-    notifyHelper.requestIOSPermissions();
+    //notifyHelper.requestPermissions();
     setState(() {
       print("หน้าหลัก");
     });
@@ -75,6 +75,7 @@ class _AdddrugState extends State<Adddrug> {
               notifyHelper.scheduledNotification(
                 int.parse(myTime.toString().split(':')[0]),
                 int.parse(myTime.toString().split(':')[1]),
+                task,
               );
               return AnimationConfiguration.staggeredList(
                   position: index,
@@ -360,15 +361,15 @@ class _AdddrugState extends State<Adddrug> {
   _appBar() {
     return AppBar(
       //backgroundColor: context.theme.backgroundColor,
-      // leading: GestureDetector(
-      //   onTap:(){
-      //     Get.back();
-      //   },
-      //   child: 
-      //         Icon(Get.isDarkMode ? Icons.arrow_back_ios : Icons.arrow_back_ios,
-      //         size: 20, color: Get.isDarkMode ? Colors.white : Colors.black),
+      /*leading: GestureDetector(
+        onTap:(){
+          Get.back();
+        },
+        child: 
+              Icon(Get.isDarkMode ? Icons.arrow_back_ios : Icons.arrow_back_ios,
+              size: 20, color: Get.isDarkMode ? Colors.white : Colors.black),
             
-      // ),
+      ),*/
 
       actions: [
         GestureDetector(
