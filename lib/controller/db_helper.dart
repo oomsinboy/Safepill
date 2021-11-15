@@ -1,21 +1,21 @@
 import 'package:flutter_application_1/controller/task.dart';
 import 'package:sqflite/sqflite.dart';
 
-class DBHelper{
+class DBHelper {
   static Database? _db;
   static final int _version = 1;
   static final String _tableName = 'tasks';
 
-  static Future<void> initDb()async{
+  static Future<void> initDb() async {
     if (_db != null) {
       return;
-    }    
+    }
     try {
       String _path = await getDatabasesPath() + 'tasks.db';
       _db = await openDatabase(
         _path,
         version: _version,
-        onCreate: (db,version) {
+        onCreate: (db, version) {
           print('Creating a new one');
           return db.execute(
             "CREATE TABLE $_tableName("
@@ -25,18 +25,17 @@ class DBHelper{
             "remind INTEGER, repeat STRING, "
             "color INTEGER, "
             "isCompleted INTEGER)",
-            
           );
         },
       );
     } catch (e) {
       print(e);
     }
-  } 
+  }
 
   static Future<int> insert(Task? task) async {
     print('insert funtion called');
-    return await _db?.insert(_tableName, task!.toJson())??1;
+    return await _db?.insert(_tableName, task!.toJson()) ?? 1;
   }
 
   static Future<List<Map<String, dynamic>>> query() async {
@@ -45,14 +44,17 @@ class DBHelper{
   }
 
   static void delete(task) async {
-   await _db!.delete(_tableName, where: 'id =?', whereArgs: [task.id]);
+    await _db!.delete(_tableName, where: 'id =?', whereArgs: [task.id]);
   }
 
-  static update(int id) async{
-   return await  _db!.rawUpdate('''
+  static update(int id) async {
+    return await _db!.rawUpdate(
+      '''
         UPDATE tasks
         SET isCompleted = ?
         WHERE id =?
-      ''',[1,id]);
+      ''',
+      [1, id],
+    );
   }
 }

@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/Navigation/naviga_drawer.dart';
 import 'package:flutter_application_1/test/res/custom_colors.dart';
@@ -40,31 +39,31 @@ class _RecordState extends State<Record> {
       borderRadius: BorderRadius.circular(30),
       color: Colors.blueAccent,
       child: MaterialButton(
-          padding: EdgeInsets.fromLTRB(20, 15, 20, 15),
-          minWidth: MediaQuery.of(context).size.width,
-          onPressed: () async {
-            final isValid = _formKey.currentState!.validate();
+        padding: EdgeInsets.fromLTRB(20, 15, 20, 15),
+        minWidth: MediaQuery.of(context).size.width,
+        onPressed: () async {
+          final isValid = _formKey.currentState!.validate();
 
-            if (isValid) {
-              _formKey.currentState!.setState(() {
-                _createEdit_pressure();
-              });
-              Navigator.of(context).pop();
-            }
-          },
-          child: Text(
-            "บันทึก",
-            textAlign: TextAlign.center,
-            style: TextStyle(
-              fontSize: 24,
-              color: Colors.white,
-            ),
-          )),
+          if (isValid) {
+            _formKey.currentState!.setState(() {
+              _createEdit_pressure();
+            });
+            Navigator.of(context).pop();
+          }
+        },
+        child: Text(
+          "บันทึก",
+          textAlign: TextAlign.center,
+          style: TextStyle(
+            fontSize: 24,
+            color: Colors.white,
+          ),
+        ),
+      ),
     );
     print('บันทึกค่าความดัน');
     return Scaffold(
-      
-      //drawer: DrawerTest(),
+      // drawer: DrawerTest(),
       appBar: AppBar(
         backgroundColor: Color(0xFF3a73b5),
         title: Text('บันทึกค่าความดันโลหิตของคุณ'),
@@ -115,26 +114,27 @@ class _RecordState extends State<Record> {
                   ),
                   SizedBox(height: 8),
                   TextFormField(
-                      autofocus: false,
-                      keyboardType: TextInputType.numberWithOptions(),
-                      controller: _data1Controller,
-                      validator: (value) {
-                        if (value!.isEmpty) {
-                          return ('กรุณากรอกตัวเลข');
-                        }
-                        return null;
-                      },
-                      onSaved: (value) {
-                        _data1Controller.text = value!;
-                      },
-                      decoration: InputDecoration(
-                        suffix: Text('mmHg'),
-                        //labelText: 'ความดันโลหิตด้านบน',
-                        labelStyle: TextStyle(fontSize: 18),
-                        border: OutlineInputBorder(),
-                        filled: true,
-                        //fillColor: Colors.white54
-                      )),
+                    autofocus: false,
+                    keyboardType: TextInputType.numberWithOptions(),
+                    controller: _data1Controller,
+                    validator: (value) {
+                      if (value!.isEmpty) {
+                        return ('กรุณากรอกตัวเลข');
+                      }
+                      return null;
+                    },
+                    onSaved: (value) {
+                      _data1Controller.text = value!;
+                    },
+                    decoration: InputDecoration(
+                      suffix: Text('mmHg'),
+                      //labelText: 'ความดันโลหิตด้านบน',
+                      labelStyle: TextStyle(fontSize: 18),
+                      border: OutlineInputBorder(),
+                      filled: true,
+                      //fillColor: Colors.white54
+                    ),
+                  ),
                   SizedBox(height: 12),
                   Text(
                     'ความดันโลหิตด้านล่าง (DIA)',
@@ -147,27 +147,28 @@ class _RecordState extends State<Record> {
                   ),
                   SizedBox(height: 8),
                   TextFormField(
-                      autofocus: false,
-                      keyboardType: TextInputType.numberWithOptions(),
-                      controller: _data2Controller,
-                      validator: (value) {
-                        if (value!.isEmpty) {
-                          return ("กรุณาใส่หมายเลข HN");
-                        }
-                        return null;
-                      },
-                      onSaved: (value) {
-                        _data2Controller.text = value!;
-                      },
-                      decoration: InputDecoration(
-                        suffix: Text('mmHg'),
-                        //prefixIcon: Icon(Icons.vpn_key),
-                        //labelText: 'ความดันโลหิตด้านล่าง',
-                        labelStyle: TextStyle(fontSize: 18),
-                        border: OutlineInputBorder(),
-                        filled: true,
-                        //fillColor: Colors.white54
-                      )),
+                    autofocus: false,
+                    keyboardType: TextInputType.numberWithOptions(),
+                    controller: _data2Controller,
+                    validator: (value) {
+                      if (value!.isEmpty) {
+                        return ("กรุณาใส่หมายเลข HN");
+                      }
+                      return null;
+                    },
+                    onSaved: (value) {
+                      _data2Controller.text = value!;
+                    },
+                    decoration: InputDecoration(
+                      suffix: Text('mmHg'),
+                      //prefixIcon: Icon(Icons.vpn_key),
+                      //labelText: 'ความดันโลหิตด้านล่าง',
+                      labelStyle: TextStyle(fontSize: 18),
+                      border: OutlineInputBorder(),
+                      filled: true,
+                      //fillColor: Colors.white54
+                    ),
+                  ),
                   SizedBox(height: 12),
                   Text(
                     'อัตราการเต้นของหัวใจ (PUL)',
@@ -180,42 +181,46 @@ class _RecordState extends State<Record> {
                   ),
                   SizedBox(height: 8),
                   TextFormField(
-                      autofocus: false,
-                      keyboardType: TextInputType.numberWithOptions(),
-                      controller: _data3Controller,
-                      validator: (value) => Validator.validateField(
-                          value: value!,
-                          ),
-                      onSaved: (value) {
-                        _data3Controller.text = value!;
-                      },
-                      decoration: InputDecoration(
-                        suffix: Text('/ นาที'),
-                        //prefixIcon: Icon(Icons.vpn_key),
-                        //labelText: 'อัตราเต้นของหัวใจ',
-                        labelStyle: TextStyle(fontSize: 18),
-                        border: OutlineInputBorder(),
-                        filled: true,
-                        //fillColor: Colors.white54
-                      )),
+                    autofocus: false,
+                    keyboardType: TextInputType.numberWithOptions(),
+                    controller: _data3Controller,
+                    validator: (value) => Validator.validateField(
+                      value: value!,
+                    ),
+                    onSaved: (value) {
+                      _data3Controller.text = value!;
+                    },
+                    decoration: InputDecoration(
+                      suffix: Text('/ นาที'),
+                      //prefixIcon: Icon(Icons.vpn_key),
+                      //labelText: 'อัตราเต้นของหัวใจ',
+                      labelStyle: TextStyle(fontSize: 18),
+                      border: OutlineInputBorder(),
+                      filled: true,
+                      //fillColor: Colors.white54
+                    ),
+                  ),
                   Padding(
-                      padding: const EdgeInsets.only(top: 0.0),
-                      child: Center(
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            TextButton(
-                              onPressed: () => Navigator.pushNamed(
-                                  context, '/detail pressure'),
-                              child: Text(
-                                'ความดันระดับไหนถึงผิดปกติ ?',
-                                style: TextStyle(
-                                    fontSize: 16.0, color: Colors.black),
+                    padding: const EdgeInsets.only(top: 0.0),
+                    child: Center(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          TextButton(
+                            onPressed: () => Navigator.pushNamed(
+                                context, '/detail pressure'),
+                            child: Text(
+                              'ความดันระดับไหนถึงผิดปกติ ?',
+                              style: TextStyle(
+                                fontSize: 16.0,
+                                color: Colors.black,
                               ),
                             ),
-                          ],
-                        ),
-                      )),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
                   SizedBox(height: 12),
                   if (_isProcessing)
                     Padding(
@@ -241,20 +246,21 @@ class _RecordState extends State<Record> {
   // ignore: non_constant_identifier_names
   Future<void> _createEdit_pressure() async {
     // print(dateUTC + ' ' + date_Time + ':00');
-  
 
     FirebaseFirestore.instance
         .collection('edit_pressure')
         .doc(user!.email)
         .collection('all')
         .doc()
-        .set({
-      'data_title': _data1Controller.text,
-      'data_description': _data2Controller.text,
-      'data_heartrate': _data3Controller.text,
-      'Adata_time': DateTime.now(),
-      
-    }, SetOptions(merge: true));
+        .set(
+      {
+        'data_title': _data1Controller.text,
+        'data_description': _data2Controller.text,
+        'data_heartrate': _data3Controller.text,
+        'Adata_time': DateTime.now(),
+      },
+      SetOptions(merge: true),
+    );
   }
 
   _pickDate() async {
