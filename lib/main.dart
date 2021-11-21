@@ -1,7 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/Navigation/naviga_medpill.dart';
 import 'package:flutter_application_1/Welcome/welcome.dart';
 import 'package:flutter_application_1/function/ui/theme.dart';
 import 'package:flutter_application_1/function/ui/theme_service.dart';
@@ -11,7 +10,7 @@ import 'package:flutter_application_1/page/graph/graph_page.dart';
 import 'package:flutter_application_1/page/guide_pill.dart';
 import 'package:flutter_application_1/page/detail_pressure.dart';
 import 'package:flutter_application_1/page/more.dart';
-import 'package:flutter_application_1/page/screen_main/pageuser.dart';
+import 'package:flutter_application_1/page/screen_main/user_page.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 
