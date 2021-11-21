@@ -3,8 +3,6 @@ import 'package:flutter/material.dart';
 //คำแนะนำการทานยา
 
 class GuidePill extends StatefulWidget {
-
-
   @override
   _GuidePillState createState() => _GuidePillState();
 }
@@ -73,9 +71,6 @@ class _GuidePillState extends State<GuidePill> {
           ),
         ],
       ),
-      
-
-      
     );
   }
 }

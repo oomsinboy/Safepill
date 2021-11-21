@@ -21,15 +21,15 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   // ignore: unused_field
   final _formkey = GlobalKey<FormState>();
 
-  final firstNameEditingController = new TextEditingController();
+  final firstNameEditingController = TextEditingController();
 
-  final numberHNEditingController = new TextEditingController();
+  final numberHNEditingController = TextEditingController();
 
-  final emailEditingController = new TextEditingController();
+  final emailEditingController = TextEditingController();
 
-  final passwordEditingController = new TextEditingController();
+  final passwordEditingController = TextEditingController();
 
-  final confirmpasswordEditingController = new TextEditingController();
+  final confirmpasswordEditingController = TextEditingController();
 
   bool? redEye = true;
 
@@ -40,7 +40,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
         controller: firstNameEditingController,
         keyboardType: TextInputType.name,
         validator: (value) {
-          RegExp regex = new RegExp(r'^.{3,}$');
+          RegExp regex = RegExp(r'^.{3,}$');
           if (value!.isEmpty) {
             return ("กรุณาใส่ชื่อ - นามสกุล");
           }
@@ -121,7 +121,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
         controller: passwordEditingController,
         obscureText: redEye!,
         validator: (value) {
-          RegExp regex = new RegExp(r'^.{6,}$');
+          RegExp regex = RegExp(r'^.{6,}$');
           if (value!.isEmpty) {
             return ("กรุณาใส่หรัสผ่านของคุณ");
           }
@@ -267,17 +267,19 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
     );
   }
 
-  void signUp(String email, String password ) async {
+  void signUp(String email, String password) async {
     if (_formkey.currentState!.validate()) {
       await _auth
           .createUserWithEmailAndPassword(email: email, password: password)
           .then((value) async {
         // ignore: deprecated_member_use
-        await value.user!.updateProfile(displayName: name, ).then((value2) {
+        await value.user!
+            .updateProfile(
+          displayName: name,
+        )
+            .then((value2) {
           postDetailsToFirestore();
         });
-        
-        
       }).catchError((e) {
         Fluttertoast.showToast(msg: e!.message);
       });

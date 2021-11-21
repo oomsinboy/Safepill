@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:flutter_application_1/Navigation/naviga_drawertest.dart';
+import 'package:flutter_application_1/Navigation/navigation_drawer.dart';
 
 class More extends StatefulWidget {
   @override
@@ -44,7 +44,6 @@ class _MoreState extends State<More> {
                   leading: Icon(Icons.auto_graph),
                   title: const Text('ความดันโลหิต'),
                   trailing: Icon(Icons.keyboard_arrow_right),
-                  
                   onTap: () => Navigator.pushNamed(context, '/graphpage'),
                 ),
                 ListTile(

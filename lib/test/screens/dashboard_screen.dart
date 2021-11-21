@@ -1,12 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/Navigation/naviga_drawertest.dart';
+import 'package:flutter_application_1/Navigation/navigation_drawer.dart';
 import 'package:flutter_application_1/function/listdata_pressure.dart';
 import 'package:flutter_application_1/page/record.dart';
 import 'package:flutter_application_1/test/res/custom_colors.dart';
-// ignore: unused_import
-import 'package:flutter_application_1/test/screens/add_screen.dart';
-// ignore: unused_import
-import 'package:flutter_application_1/test/widgets/item_list.dart';
 
 class DashboardScreen extends StatefulWidget {
   @override
@@ -14,7 +10,6 @@ class DashboardScreen extends StatefulWidget {
 }
 
 class _DashboardScreenState extends State<DashboardScreen> {
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -31,7 +26,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
         onPressed: () {
           Navigator.of(context).push(
             MaterialPageRoute(
-              builder: (context) => /*AddScreen()*/Record(),
+              builder: (context) => /*AddScreen()*/ Record(),
             ),
           );
         },

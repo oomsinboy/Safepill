@@ -50,7 +50,7 @@ class NotifyHelper {
       importance: Importance.max,
     );
 
-    requestPermissions(_channel);
+    requestDevicePermissions(_channel);
 
     await flutterLocalNotificationsPlugin.show(
       0,
@@ -115,7 +115,7 @@ class NotifyHelper {
     tz.setLocalLocation(tz.getLocation(timeZone));
   }
 
-  void requestPermissions(AndroidNotificationChannel _channel) async {
+  void requestDevicePermissions(AndroidNotificationChannel _channel) async {
     if (Platform.isAndroid) {
       await flutterLocalNotificationsPlugin
           .resolvePlatformSpecificImplementation<
@@ -169,6 +169,4 @@ class NotifyHelper {
     );*/
     Get.dialog(Text("ยินดีต้อนรับ"));
   }
-
-  void iniNotification() {}
 }

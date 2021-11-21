@@ -10,8 +10,6 @@ class PageDataUser extends StatefulWidget {
 }
 
 class _PageDataUserState extends State<PageDataUser> {
-  // ignore: unused_field
-  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   FirebaseAuth _auth = FirebaseAuth.instance;
   late User user;
 
@@ -167,9 +165,7 @@ class _PageDataUserState extends State<PageDataUser> {
                     SizedBox(
                       width: 10,
                     ),
-                    Text(
-                      'Number HN : ' 
-                    ),
+                    Text('Number HN : '),
                     // getHN()
                   ],
                 ),

@@ -1,12 +1,9 @@
 import 'package:bottom_navy_bar/bottom_navy_bar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/function/ui/adddrug.dart';
+import 'package:flutter_application_1/function/ui/add_drug.dart';
 import 'package:flutter_application_1/test/screens/dashboard_screen.dart';
-import 'page/historydrug.dart';
-import 'page/homepage.dart';
-// ignore: unused_import
-import 'page/record.dart';
+import 'page/history_drug.dart';
 import 'page/more.dart';
 
 class Home extends StatefulWidget {
@@ -46,7 +43,7 @@ class _HomeState extends State<Home> {
         },
         children: [
           //Homepage(),
-          Adddrug(),
+          AddDrug(),
           Historydrug(),
           DashboardScreen(),
           //Record(),

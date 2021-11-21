@@ -1,20 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/function/graphps.dart';
 
-class PageGraphtest extends StatefulWidget {
-  const PageGraphtest({Key? key}) : super(key: key);
+class GraphPage extends StatefulWidget {
+  const GraphPage({Key? key}) : super(key: key);
 
   @override
-  _PageGraphtestState createState() => _PageGraphtestState();
+  _GraphPageState createState() => _GraphPageState();
 }
 
-class _PageGraphtestState extends State<PageGraphtest> {
+class _GraphPageState extends State<GraphPage> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {},
       child: Scaffold(
-//  drawer: Navigalist(),
         appBar: AppBar(
           elevation: 0,
           backgroundColor: Color(0xFF3a73b5),

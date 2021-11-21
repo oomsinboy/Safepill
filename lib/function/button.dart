@@ -4,7 +4,12 @@ import 'package:flutter_application_1/function/ui/theme.dart';
 class MyButton extends StatelessWidget {
   final String label;
   final Function()? onTap;
-  const MyButton({ Key? key, required this.label, required this.onTap }) : super(key: key);
+
+  const MyButton({
+    Key? key,
+    required this.label,
+    required this.onTap,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +21,7 @@ class MyButton extends StatelessWidget {
         padding: EdgeInsets.all(20),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(20),
-          color: primaryClr
+          color: primaryClr,
         ),
         child: Text(
           label,
@@ -25,10 +30,8 @@ class MyButton extends StatelessWidget {
             fontSize: 16,
             color: Colors.white,
           ),
-          
         ),
       ),
-      
     );
   }
 }

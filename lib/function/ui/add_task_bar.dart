@@ -1,6 +1,4 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/Navigation/naviga_drawer.dart';
 import 'package:flutter_application_1/controller/task_controller.dart';
 import 'package:flutter_application_1/function/button.dart';
 import 'package:flutter_application_1/function/ui/input_field.dart';
@@ -17,12 +15,12 @@ class AddTaskPage extends StatefulWidget {
 }
 
 class _AddTaskPageState extends State<AddTaskPage> {
-
   String? users;
   final _formKey = GlobalKey<FormState>();
   final TaskController _taskController = Get.put(TaskController());
   final TextEditingController _titleController = TextEditingController();
   final TextEditingController _noteController = TextEditingController();
+
   DateTime _selecteDate = DateTime.now();
   String _endTime = '9:00 PM';
   String _startTime = DateFormat('hh:mm a').format(DateTime.now()).toString();
@@ -42,7 +40,6 @@ class _AddTaskPageState extends State<AddTaskPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      //backgroundColor: context.theme.backgroundColor,
       appBar: _appBar(context),
       body: Container(
         padding: const EdgeInsets.only(left: 20, right: 20, top: 10),
@@ -60,32 +57,6 @@ class _AddTaskPageState extends State<AddTaskPage> {
                 hint: 'กรุณากรอกชื่อยา',
                 controller: _titleController,
               ),
-              // Row(
-              //   children: [
-              //     Expanded(
-              //         child: MyInputField(
-              //       title: 'จำนวนเม็ด',
-              //       hint: '',
-              //     )),
-              //     SizedBox(
-              //       width: 12,
-              //     ),
-              //     Expanded(
-              //         child: MyInputField(
-              //       title: 'ประเภทของยา',
-              //       hint: '',
-              //       widget: IconButton(
-              //         onPressed: () {
-              //           _getTimeFromUser(isStartTime: false);
-              //         },
-              //         icon: Icon(
-              //           Icons.access_time_rounded,
-              //           color: Colors.grey,
-              //         ),
-              //       ),
-              //     )),
-              //   ],
-              // ),
               MyInputField(
                 title: 'หมายเหตุ',
                 hint: 'กรุณาใส่ช่วงที่กินยา',
@@ -107,36 +78,38 @@ class _AddTaskPageState extends State<AddTaskPage> {
               Row(
                 children: [
                   Expanded(
-                      child: MyInputField(
-                    title: 'เวลาเริ่มต้น',
-                    hint: _startTime,
-                    widget: IconButton(
-                      onPressed: () {
-                        _getTimeFromUser(isStartTime: true);
-                      },
-                      icon: Icon(
-                        Icons.access_time_rounded,
-                        color: Colors.grey,
+                    child: MyInputField(
+                      title: 'เวลาเริ่มต้น',
+                      hint: _startTime,
+                      widget: IconButton(
+                        onPressed: () {
+                          _getTimeFromUser(isStartTime: true);
+                        },
+                        icon: Icon(
+                          Icons.access_time_rounded,
+                          color: Colors.grey,
+                        ),
                       ),
                     ),
-                  )),
+                  ),
                   SizedBox(
                     width: 12,
                   ),
                   Expanded(
-                      child: MyInputField(
-                    title: 'หมดเวลา',
-                    hint: _endTime,
-                    widget: IconButton(
-                      onPressed: () {
-                        _getTimeFromUser(isStartTime: false);
-                      },
-                      icon: Icon(
-                        Icons.access_time_rounded,
-                        color: Colors.grey,
+                    child: MyInputField(
+                      title: 'หมดเวลา',
+                      hint: _endTime,
+                      widget: IconButton(
+                        onPressed: () {
+                          _getTimeFromUser(isStartTime: false);
+                        },
+                        icon: Icon(
+                          Icons.access_time_rounded,
+                          color: Colors.grey,
+                        ),
                       ),
                     ),
-                  )),
+                  ),
                 ],
               ),
               MyInputField(
@@ -202,7 +175,10 @@ class _AddTaskPageState extends State<AddTaskPage> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   _colorPallete(),
-                  MyButton(label: 'เพิ่มยา', onTap: ()=>_validateDate(),)
+                  MyButton(
+                    label: 'เพิ่มยา',
+                    onTap: () => _validateDate(),
+                  )
                 ],
               ),
               SizedBox(
@@ -215,53 +191,25 @@ class _AddTaskPageState extends State<AddTaskPage> {
     );
   }
 
- _validateDate() async {
-   
-  //  FirebaseFirestore.instance
-  //       .collection('addpill')
-  //       // .doc()
-  //       // .collection('all')
-  //       .doc(user!.email)
-  //       .set({
-  //     'namepill': _titleController.text,
-  //     'notepill': _noteController.text,
-  //     //'data_heartrate': _data3Controller.text,
-  //     //'Adata_time': DateTime.now(),
-  //   }, SetOptions(merge: true));
-
-    if(_titleController.text.isNotEmpty&&_noteController.text.isNotEmpty) {
+  _validateDate() async {
+    if (_titleController.text.isNotEmpty && _noteController.text.isNotEmpty) {
       _addTaskToDb();
       Get.back();
-    }else if(_titleController.text.isEmpty || _noteController.text.isEmpty) {
-      Get.snackbar("กรุณากรอก", "กรุณากรอกทุกช่อง !",
+    } else if (_titleController.text.isEmpty || _noteController.text.isEmpty) {
+      Get.snackbar(
+        "กรุณากรอก",
+        "กรุณากรอกทุกช่อง !",
         snackPosition: SnackPosition.BOTTOM,
         backgroundColor: Colors.white,
         colorText: pinkClr,
         icon: Icon(Icons.warning_amber_rounded),
-        //colorText:Colors.red
       );
     }
   }
 
-   _addTaskToDb() async {
-    // FirebaseFirestore.instance
-    //     .collection('add_pill')
-    //     .doc(user!.email)
-    //     .collection('pill_list')
-    //     .doc()
-    //     .set({
-    //       'title':_titleController.text,
-    //       'date':DateFormat.yMd().format(_selecteDate),
-    //       'note':_noteController.text,
-    //       // 'isCompleted':0,
-    //       // 'startTime':
-    //       // 'endTime':
-    //       // 'color':
-    //       // 'remind':
-    //       // 'repeat':
-    //     },SetOptions(merge: true));
-   int value = await _taskController.addTask(
-     task:Task(
+  _addTaskToDb() async {
+    int value = await _taskController.addTask(
+        task: Task(
       note: _noteController.text,
       title: _titleController.text,
       date: DateFormat.yMd().format(_selecteDate),
@@ -271,10 +219,8 @@ class _AddTaskPageState extends State<AddTaskPage> {
       repeat: _selectedRepeat,
       color: _selectedColor,
       isCompleted: 0,
-
-    )
-    );
-    print('My id is'+"$value");
+    ));
+    print('My id is' + "$value");
   }
 
   _colorPallete() {
@@ -332,18 +278,22 @@ class _AddTaskPageState extends State<AddTaskPage> {
         onTap: () {
           Get.back();
         },
-        child: Icon(Icons.arrow_back_ios,
-            size: 20, color: Get.isDarkMode ? Colors.white : Colors.black),
+        child: Icon(
+          Icons.arrow_back_ios,
+          size: 20,
+          color: Get.isDarkMode ? Colors.white : Colors.black,
+        ),
       ),
     );
   }
 
   _getDateFromUser() async {
     DateTime? _pickerDate = await showDatePicker(
-        context: context,
-        initialDate: DateTime.now(),
-        firstDate: DateTime(2015),
-        lastDate: DateTime(2050));
+      context: context,
+      initialDate: DateTime.now(),
+      firstDate: DateTime(2015),
+      lastDate: DateTime(2050),
+    );
 
     if (_pickerDate != null) {
       setState(() {
@@ -355,7 +305,7 @@ class _AddTaskPageState extends State<AddTaskPage> {
     }
   }
 
-    _getTimeFromUser({required bool isStartTime}) async {
+  _getTimeFromUser({required bool isStartTime}) async {
     var _pickedTime = await _showTimePicker();
     print(_pickedTime.format(context));
     String _formatedTime = _pickedTime.format(context);
@@ -376,11 +326,14 @@ class _AddTaskPageState extends State<AddTaskPage> {
 
   _showTimePicker() {
     return showTimePicker(
-        initialEntryMode: TimePickerEntryMode.input,
-        context: context,
-        initialTime: TimeOfDay(
-            //_starTime --> 10:30 AM
-            hour: int.parse(_startTime.split(":")[0]),
-            minute: int.parse(_startTime.split(":")[1].split(" ")[0])));
+      initialEntryMode: TimePickerEntryMode.input,
+      context: context,
+      initialTime: TimeOfDay(
+        hour: int.parse(_startTime.split(":")[0]),
+        minute: int.parse(
+          _startTime.split(":")[1].split(" ")[0],
+        ),
+      ),
+    );
   }
 }

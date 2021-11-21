@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/Navigation/naviga_drawer.dart';
 import 'package:flutter_application_1/test/res/custom_colors.dart';
 import 'package:flutter_application_1/test/utils/validator.dart';
 import 'package:intl/intl.dart';
@@ -18,6 +18,8 @@ class _RecordState extends State<Record> {
   final _formKey = GlobalKey<FormState>();
 
   late String users;
+
+  User? user = FirebaseAuth.instance.currentUser;
 
   bool _isProcessing = false;
 
@@ -161,12 +163,9 @@ class _RecordState extends State<Record> {
                     },
                     decoration: InputDecoration(
                       suffix: Text('mmHg'),
-                      //prefixIcon: Icon(Icons.vpn_key),
-                      //labelText: 'ความดันโลหิตด้านล่าง',
                       labelStyle: TextStyle(fontSize: 18),
                       border: OutlineInputBorder(),
                       filled: true,
-                      //fillColor: Colors.white54
                     ),
                   ),
                   SizedBox(height: 12),
@@ -192,12 +191,9 @@ class _RecordState extends State<Record> {
                     },
                     decoration: InputDecoration(
                       suffix: Text('/ นาที'),
-                      //prefixIcon: Icon(Icons.vpn_key),
-                      //labelText: 'อัตราเต้นของหัวใจ',
                       labelStyle: TextStyle(fontSize: 18),
                       border: OutlineInputBorder(),
                       filled: true,
-                      //fillColor: Colors.white54
                     ),
                   ),
                   Padding(
